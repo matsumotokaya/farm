@@ -1,0 +1,48 @@
+# Farm Core: 実データを誤って公開しないためのガード。
+# 各層ディレクトリには .gitkeep のみを残し、それ以外は無視する。
+# Farm Instance ではこの .gitignore を緩めて、必要なディレクトリを追跡する。
+
+# Instance 実データ層（Core では空のまま）
+00_soil/*
+10_seeds/*
+20_seedbank/*
+30_nursery/*
+50_greenhouse/*
+60_harvest/*
+70_grading/*
+80_market/*
+90_weather/*
+99_compost/*
+
+# ただし骨格を保つために .gitkeep だけは追跡する
+!00_soil/.gitkeep
+!10_seeds/.gitkeep
+!20_seedbank/.gitkeep
+!30_nursery/.gitkeep
+!50_greenhouse/.gitkeep
+!60_harvest/.gitkeep
+!70_grading/.gitkeep
+!80_market/.gitkeep
+!90_weather/.gitkeep
+!99_compost/.gitkeep
+
+# OS / Editor / Misc
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.log
+
+# 機密
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# 一時ファイル
+tmp/
+.tmp/

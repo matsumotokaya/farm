@@ -1,0 +1,92 @@
+# glossary.yaml
+# farm 全体で共有する用語集。
+# 同じ概念が異なる呼び方で揺れることを防ぐ。AI は成果物生成前に参照する。
+#
+# Farm Core が提供するのは「Farm の運用語彙」だけです。
+# 事業名・プロダクト名・固有名詞などは、各 Farm Instance がここに追記してください。
+#
+# エントリ書式:
+#   <slug>:
+#     ja: 日本語表記（正規）
+#     en: 英語表記（正規）
+#     aliases: [許容される別名]
+#     definition: 一行の定義
+#     do_not_use: [使ってはいけない表現]
+#     soil_ref: 詳細が書かれた soil 内パス
+
+# ============================================================
+# Farm Core 用語（Instance 側で書き換え不要）
+# ============================================================
+
+farm:
+  ja: ファーム
+  en: farm
+  aliases: [artifact farm, artifact-farm]
+  definition: AI と協働して事業成果物を栽培するためのフレームワーク本体。
+  do_not_use: []
+
+soil:
+  ja: 土壌
+  en: soil
+  definition: 成果物生成のための正規情報。事業戦略・プロダクト仕様・主張・根拠など。
+
+seed:
+  ja: 種
+  en: seed
+  definition: 未整理の素材。スクショ、メモ、参考、ビジュアルなど。
+
+seedbank:
+  ja: 種子庫
+  en: seedbank
+  definition: 再利用可能な選別済み素材。
+
+trellis:
+  ja: 支柱
+  en: trellis
+  definition: AI 出力の形を決める構造物。テンプレート、プロンプト、ルール、スキーマ。
+
+greenhouse:
+  ja: 温室
+  en: greenhouse
+  definition: AI が生成作業を行う実験場。最終版ではない。
+
+harvest:
+  ja: 収穫物
+  en: harvest
+  definition: AI が生成したまとまった成果物。人間レビュー前。
+
+grading:
+  ja: 選果
+  en: grading
+  definition: 人間によるレビュー、チェック、編集。
+
+market_release:
+  ja: 出荷
+  en: market release
+  definition: 公開・提出・配布した確定版。スナップショットであり、永遠の完成版ではない。
+
+compost:
+  ja: 堆肥
+  en: compost
+  definition: ボツ案・失敗生成物・旧版の保管庫。消さずに肥料化する。
+
+# ============================================================
+# Instance 用語（ここから下に、各 Farm Instance の固有名詞を追記）
+# ============================================================
+
+# 例（書き換えてください）:
+# your_business:
+#   ja: <事業の日本語名>
+#   en: <Business English Name>
+#   aliases: []
+#   definition: <一行で事業を説明>
+#   do_not_use: [<使ってはいけない表記揺れ>]
+#   soil_ref: 00_soil/business/<your_business>_positioning.md
+#
+# your_product:
+#   ja: <プロダクトの日本語名>
+#   en: <Product English Name>
+#   aliases: []
+#   definition: <一行でプロダクトを説明>
+#   do_not_use: []
+#   soil_ref: 00_soil/product/<your_product>.md
