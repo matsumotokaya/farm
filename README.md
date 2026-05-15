@@ -2,7 +2,7 @@
 
 Farm(ファーム)は、AIエージェントによるコンテンツ開発を行うための環境設計フレームワークです。
 
-生成AIによる成果物は、文脈・素材・制約・フィードバックによってコントロールされるため、本質的に、工業製品というよりは農作物や畜産物に近い声質を持ちます。
+生成AIによる成果物は、文脈・素材・制約・フィードバックによってコントロールされるため、本質的に、工業製品というよりは農作物や畜産物に近い性質を持ちます。
 
 人間の役割は、成果物を毎回ゼロから手作りすることではなく、良い成果物を生むための環境エンジニアリングを行うことです。
 
@@ -56,63 +56,81 @@ Core リポジトリには `.gitkeep` のみで空のディレクトリ骨格を
 
 ---
 
-## クイックスタート：Farm Instance を作る
+## 使い始める
 
-新しい事業・プロダクト・小説などを始めるときは、Farm Core をクローンして Instance 化します。
+Farm を使うのに、特別な技術知識は要りません。ZIP をダウンロードして、AI エージェントに「このフォルダの `agent.md` を読んで」と伝えるだけで始められます。
 
-### 1. クローンしてリネーム
+### 1. ダウンロードする
+
+このリポジトリのページで、緑色の「**Code**」ボタンを押し、表示される「**Download ZIP**」を選ぶ。
+
+ZIP を展開して、自分のPCの好きな場所に置く。フォルダ名は自分のプロジェクトに合わせて変える（例：`farm-mynovel`、`farm-saas-plan`、`farm-newsletter`）。
+
+```
+~/Documents/farm-mynovel/   ← こんな形で配置
+```
+
+これで準備完了です。GitHub アカウントは作らなくて構いません。
+
+### 2. AI エージェントに最初の指示を与える
+
+そのフォルダを AI エージェント（Claude / ChatGPT / Cursor / Gemini など）で開き、最初にこう伝えます：
+
+> このフォルダの `agent.md` を読んで、書かれている通りに動いてください。
+
+これ以降、AI は「ファーム長（Orchestrator）」として、Farm のルールに沿って働きます。
+
+### 3. 設定を埋める
+
+[farm.config.yaml](farm.config.yaml) の中の `<...>` というプレースホルダを、自分のプロジェクトの値に置き換える。AI に「`farm.config.yaml` を私のプロジェクトに合わせて埋めて」と頼んでも構いません。
+
+主な項目：
+
+- `farm.name`：この Farm の識別名（例：`farm-mynovel`）
+- `focus`：今期の主対象（事業、プロダクト、成果物）
+- `businesses[]`：扱うテーマや事業
+- `artifacts.*.status`：作りたいものを `planned` → `active` に変更
+
+### 4. 用語を登録する
+
+[glossary.yaml](glossary.yaml) の「Instance 用語」セクションに、自分のプロジェクトの固有名詞（事業名、キャラ名、プロダクト名、禁止表現）を追加する。
+
+ここを早めに整えると、AI 生成物の表記揺れ（「XTRUST」と「X-Trust」が混在するような事故）を防げます。
+
+### 5. 素材を投げ込み始める
+
+`10_seeds/inbox/` フォルダに、メモ・スクショ・参考資料・AI との対話ログを置いていく。これが Farm における人間の主な仕事です。あとは AI がここから栽培していきます。
+
+成果物の種類ごとに「最初に置くと良い正規情報」が異なります。後述の「ユースケース別 Soil の最小構成」を参照してください。
+
+---
+
+## バックアップやチームで使いたい場合（任意）
+
+Git や GitHub を使うと、編集履歴の管理、複数PCでの作業、チーム共同編集ができます。**使わなくても Farm は問題なく動きます。** 必要を感じたときに導入すれば十分です。
+
+### 編集履歴を残したい
+
+ダウンロードしたフォルダで Git を有効にすれば、いつどのファイルを変更したかが残せます。
 
 ```bash
-# Core を取得（履歴は引き継がない）
-git clone --depth 1 git@github.com:matsumotokaya/farm.git farm-<your-name>
-cd farm-<your-name>
-
-# Core への参照を切り離し、自分の履歴に切り替える
-rm -rf .git
+cd farm-mynovel
 git init
 git add .
-git commit -m "Initialize farm instance from farm-core"
+git commit -m "Initialize"
 ```
 
-`<your-name>` は対象事業・作品の slug にします（例：`farm-your-business`, `farm-your-product`, `farm-your-novel`）。
+### GitHub にバックアップしたい / チームで共有したい
 
-### 2. 設定を埋める
+最も簡単な方法は、このリポジトリページ上部の「**Use this template**」ボタン（緑色の Code ボタンの左隣）を押すこと。GitHub アカウントに、Farm Core から完全に独立した、あなた専用のリポジトリが作られます。
 
-[farm.config.yaml](farm.config.yaml) のプレースホルダ `<...>` を実値に置き換える。最低限：
+**必ず Private に設定してください。** 事業情報・作品情報・営業資料の下書きなどが入るため、誤って公開しないようにします。
 
-- `farm.name`（この Instance の識別名）
-- `farm.created`（作成日）
-- `focus.business` / `focus.product` / `focus.artifact`（今期の主対象）
-- `businesses[]`（取り扱う事業の id・soil_path・product_ids）
-- `artifacts.*.status`（実際に作るものを `planned` から `active` に変更）
+その後、できた自分のリポジトリを `git clone` して使ってください。それ以降の `git push` はあなたのリポジトリに送られ、Farm Core 側には届きません（GitHub の権限で守られます）。
 
-### 3. 語彙を登録
+### Farm Core の更新を取り込みたい
 
-[glossary.yaml](glossary.yaml) の `Instance 用語` セクションに、事業名・プロダクト名・固有名詞・禁止表現を追加する。
-ここを最初に整備しないと、AI 生成物で表記揺れが必ず発生する。
-
-### 4. Soil の最小集合を用意
-
-`00_soil/` に最低限の正規情報を置く。空のまま生成を始めると AI は推測で埋め始める。
-成果物の種類によって必要な soil は異なる（後述の「ユースケース別 Soil の最小構成」を参照）。
-
-### 5. AI への最初の指示
-
-新しいセッションで AI（Claude / Cursor / Gemini など）に [agent.md](agent.md) を読ませる。
-これ以降 AI は「ファーム長（Orchestrator）」として振る舞い、[40_trellis/rules/](40_trellis/rules/) のルールに従う。
-
-### 6. Core からの更新を取り込みたい場合
-
-Core 側で改善があったときに取り込みたい場合は、Core を upstream として追加する：
-
-```bash
-git remote add core git@github.com:matsumotokaya/farm.git
-git fetch core
-# 必要な変更だけ cherry-pick する。merge は Instance の実データと衝突しやすいので避ける。
-git cherry-pick <commit-hash>
-```
-
-Core を fork して使う運用も可。その場合は GitHub の private fork を推奨（Instance は機密を含む）。
+Farm Core（このリポジトリ）が更新されたときは、新しい ZIP をダウンロードして、必要なファイル（`40_trellis/` 配下のルールやプロンプトなど）だけを自分のフォルダに上書きする方法が最も簡単です。`00_soil/` などの実データは上書きしないように注意してください。
 
 ---
 
