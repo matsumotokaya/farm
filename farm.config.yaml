@@ -72,6 +72,7 @@ meta:
   evolution_rules: 40_trellis/rules/farm_evolution_rules.md
   backlog: 90_weather/farm_backlog.md
   reviews: 90_weather/farm_reviews
+  output_models: 00_soil/farm/output_models.md
 
 # 生成と人間レビューの境界。harvest までは AI、grading 以降は人間が主導。
 governance:
