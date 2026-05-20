@@ -62,6 +62,10 @@ artifacts:
   manual:
     status: planned
 
+# 共通懸念（Objections）管理のパス。成果物生成時にAIが必ず参照する。
+objections:
+  common: 00_soil/objections/common_objections.md
+
 # farm 自体の改善管理。
 meta:
   intent: 00_soil/farm/farm_intent.md
@@ -91,3 +95,4 @@ naming:
 logging:
   ai_work_log_dir: 90_weather/ai_work_logs
   decision_log: 90_weather/decision_log.md
+  soil_changelog: 90_weather/soil_changelog.md

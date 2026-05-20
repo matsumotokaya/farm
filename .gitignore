@@ -26,6 +26,14 @@
 !90_weather/.gitkeep
 !99_compost/.gitkeep
 
+# Core テンプレート用の追跡対象ファイル
+!00_soil/farm/
+!00_soil/farm/output_models.md
+!00_soil/farm/operating_model.md
+!00_soil/objections/
+!00_soil/objections/common_objections.md
+!90_weather/soil_changelog.md
+
 # OS / Editor / Misc
 .DS_Store
 Thumbs.db

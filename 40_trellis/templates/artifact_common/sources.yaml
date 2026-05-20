@@ -1,0 +1,20 @@
+# sources.yaml
+# この成果物バージョンが依存している土壌（Soil）および素材（Seedbank）、
+# ならびに土壌変更ログ（soil_changelog.md）の取り込み状態を自己申告するファイル。
+
+# 1. この成果物が依存している正規情報（Soil）および素材（Seedbank）のリスト
+depends_on:
+  - 00_soil/business/commercial_offer.md
+  # - 00_soil/product/<product_specs>.md
+  # - 00_soil/brand/key_copy.md
+
+# 2. この成果物が「いつ時点の Soil 変更ログまで取り込み済みか」のID
+# （90_weather/soil_changelog.md の Log ID と一致させる）
+generated_from_soil_changelog_until: LOG-YYYY-MM-DD-XX
+
+# 3. 変更ログには存在するが、あえて「まだ反映していない」「意図的に反映しない」土壌変更のリスト
+not_yet_reflected: []
+# 例：
+# not_yet_reflected:
+#   - log_id: LOG-2026-05-20-02
+#     reason: "特定の先行商談において、旧機能セットでの提案を維持するため"
