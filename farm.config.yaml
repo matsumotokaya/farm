@@ -38,7 +38,9 @@ businesses: []
 # 取り扱う成果物の種類。greenhouse / harvest / grading / market 配下のサブパスと対応する。
 # Farm Core はあくまで汎用枠だけを示し、実際の成果物は Instance 側で有効化する。
 # 不要なものは status: planned のまま、または削除してよい。
+# ユースケースに合わせて自由に artifact を追加・削除する。
 artifacts:
+  # ── 事業・資料系 ──────────────────────────────
   investor_deck:
     status: planned
     greenhouse: 50_greenhouse/investor_deck
@@ -57,10 +59,27 @@ artifacts:
     status: planned
   flyer:
     status: planned
-  video:
-    status: planned
   manual:
     status: planned
+
+  # ── 長編コンテンツ系 ──────────────────────────
+  novel:
+    status: planned
+    # 00_soil 構成例: characters/ world/ plot/ themes/ style/
+  screenplay:
+    status: planned
+    # 00_soil 構成例: characters/ world/ acts/ scenes/ style/
+
+  # ── 短・中尺コンテンツ系 ──────────────────────
+  newsletter:
+    status: planned
+    # 00_soil 構成例: audience/ voice/ recurring_sections/ topics/
+  article:
+    status: planned
+    # 00_soil 構成例: audience/ voice/ angle/ sources/
+  video_script:
+    status: planned
+    # 00_soil 構成例: audience/ voice/ format/ hooks/
 
 # 共通懸念（Objections）管理のパス。成果物生成時にAIが必ず参照する。
 objections:

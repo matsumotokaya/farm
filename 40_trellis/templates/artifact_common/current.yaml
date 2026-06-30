@@ -1,0 +1,36 @@
+# current.yaml
+#
+# このファイルは、`60_harvest/<artifact>/current.yaml` として配置し、
+# 「この artifact の現在の正本（canonical latest）」がどの版かを示すポインタです。
+#
+# Farm Core の参照モード分離ルール（`40_trellis/rules/layer_protocol_rules.md` §5）に基づき、
+# - exact reference（再現性が必要な参照）: 版付きパス（v00X）を直接書く
+# - canonical latest reference（最新版を正本として参照したい場合）: 本ファイル経由で参照する
+# の使い分けを実現するための仕組みです。
+#
+# 新版を harvest に昇格させたら、必ず本ファイルを更新してください。
+# 更新忘れを防ぐためのチェックは `artifact_rules.md` §11 を参照。
+
+artifact: <artifact_name>             # 例: business_plan_investor
+current_version: <v00X>               # 例: v004
+primary_file: <相対パス>              # 例: 60_harvest/business_plan_investor/v004/business_plan.md
+
+# このポインタが指す版に関する補足
+notes:
+  promoted_at: <YYYY-MM-DD>
+  promoted_by: <orchestrator / human>
+  previous_version: <v00(X-1) or null>
+  # 旧版から本版への変更概要
+  delta_summary: |
+    <この版で何が変わったかの一行サマリ>
+
+# canonical latest reference を使ってよい主なファイル種別（参考）
+# - prompt（generate_<artifact>.md, review_<artifact>.md）
+# - context_pack.md / deck_brief.md
+# - artifact 間の通常参照（例：別 artifact からの引用）
+#
+# 一方で、以下は必ず版付きパス（exact reference）で書くこと：
+# - sources.yaml の depends_on
+# - artifact_manifest.yaml
+# - 80_market/ の出荷スナップショット
+# - 監査ログ / decision_log の参照

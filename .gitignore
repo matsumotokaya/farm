@@ -33,6 +33,12 @@
 !00_soil/objections/
 !00_soil/objections/common_objections.md
 !90_weather/soil_changelog.md
+!90_weather/decision_log.md
+!90_weather/farm_backlog.md
+!90_weather/farm_reviews/
+!90_weather/farm_reviews/.gitkeep
+!90_weather/ai_work_logs/
+!90_weather/ai_work_logs/.gitkeep
 
 # OS / Editor / Misc
 .DS_Store

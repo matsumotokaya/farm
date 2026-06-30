@@ -25,11 +25,13 @@
    詳細なルールと動作モデルについては、以下のファイルを必ず事前に読み込んでください。
    - 動作モデル: `00_soil/farm/operating_model.md`
    - オーケストレーション規則: `40_trellis/rules/agent_orchestration_rules.md`
-   - 層間プロトコル規則: `40_trellis/rules/layer_protocol_rules.md`
+   - 層間プロトコル規則: `40_trellis/rules/layer_protocol_rules.md`（OKF仕様と検索・追従プロトコルを含む）
+
+   上記 3 つ以外のルール（artifact_rules / evidence_request_rules / expression_governance_rules / design_handoff_rules / farm_evolution_rules）は、該当作業に入ったタイミングで参照してください。全体像と適用タイミングは `40_trellis/rules/README.md`（ルール索引）にまとめてあります。
 
 2. **オーケストレーターとしての介入境界**:
    あなたの主な介入領域は、プロセスの**最初 (Entry: 土壌と素材の整理)** と **最後 (Exit: 出荷時の最終調整・仕上げ)** です。
-   - **Entry**: 土壌（`00_soil/`）の修正・追加・削除や inbox 素材の索引化。
+   - **Entry**: 土壌（`00_soil/`）の修正・追加・削除（情報昇格時のOKF適用を含む）や inbox 素材の索引化。
    - **中間プロセス (`10_seeds` 〜 `70_grading`)**: 原則として人間（またはあなたのマニュアル命令）は介入せず、各層の分散仮想エージェント（Cultivator, Inspector 等）が自律的かつ必然的に行う「ブラックボックスな自然プロセス」に任せてください。中間への恣意的な個別介入（「このスライドだけ無理やり反映する」等）は例外であり、ユーザーが明示的に指示した場合に限定します。
    - **Exit**: 成果物の出荷（`80_market/` への配置）の際、最終調整・微修正・最終承認をユーザーと共に行います。
 
@@ -41,6 +43,19 @@
    - 1. 更新対象の直近バージョン配下にある **`sources.yaml`**（依存しているSoilファイル一覧の確認）
    - 2. **`90_weather/soil_changelog.md`**（`sources.yaml` の取り込み済みID以降に、どんな土壌変更があったかの照合）
 
-5. **フィードバックの蓄積**:
+5. **成果物バージョン参照の使い分け**:
+   成果物（artifact）への参照には 2 つのモードがあります。混同するとバージョン上げのたびに大量の手修正が発生します。
+   - **exact reference**（版付きパスを直接書く）：`sources.yaml`、`artifact_manifest.yaml`、出荷スナップショット、監査記録など、再現性が必要な場面。
+   - **canonical latest reference**（`60_harvest/<artifact>/current.yaml` 経由）：prompt、context_pack、deck_brief、artifact 間の通常参照など「最新版を正本として見たい」場面。
+   詳細は `40_trellis/rules/layer_protocol_rules.md` §5 および `40_trellis/rules/artifact_rules.md` §11 を参照してください。
+
+6. **表現統制（grep ベース）**:
+   「使ってはいけない表現」をルール文や guardrails に「『X』を使わない」型で書き残しても、AI は文書内にその語が残っている限り使用可能と判断します。表現を止めたい場合は、ルール記述ではなく **対象語をプロジェクト全体から物理的に削除・置換** することで統制します。詳細は `40_trellis/rules/expression_governance_rules.md` を参照。
+
+7. **フィードバックの蓄積**:
    運用中に Farm Core（テンプレート本体）への共通的な改善課題や欠陥に気づいた場合は、ルートの `FARM_CORE_FEEDBACK.md` に追記してください。Instance 固有の課題は `90_weather/` 側で扱います。
+
+8. **定期検診 (Lint) とクエリ永続化 (LLM Wiki)**:
+   - ユーザーから `[Lint]` の指示を受けた際、または定期メンテナンス時には、`40_trellis/rules/layer_protocol_rules.md` §7.2 に従って土壌（Soil）の不整合、リンク切れ、期限切れ、データのギャップを検査・報告してください。
+   - ユーザーとの対話で生まれた有益な知見、構成案、比較分析結果は、使い捨てにせず `20_seedbank/conversations/` または `10_seeds/inbox/` にMarkdownファイルとして保存・永続化し、知見を累積させてください。
 
